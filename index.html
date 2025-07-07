@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrazyGames Clone</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* Header */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-actions button {
+            background-color: #ff5a5f;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            padding: 15px 20px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .nav-menu li:hover {
+            background-color: #34495e;
+        }
+        
+        .nav-menu li.active {
+            background-color: #1abc9c;
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 5%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-color: #3498db;
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .hero-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .hero-buttons .primary {
+            background-color: #ff5a5f;
+            color: white;
+        }
+        
+        .hero-buttons .secondary {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+        }
+        
+        /* Game Categories */
+        .categories {
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .section-header a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .category-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .category-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-image {
+            height: 100px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .category-info {
+            padding: 15px;
+        }
+        
+        .category-info h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .category-info p {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        /* Popular Games */
+        .popular-games {
+            margin-bottom: 30px;
+        }
+        
+        .game-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .game-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .game-image {
+            height: 150px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .game-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff5a5f;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .game-info {
+            padding: 15px;
+        }
+        
+        .game-info h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                margin: 15px 0;
+            }
+            
+            .nav-menu {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding: 10px 0;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .category-list, .game-list {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://www.crazygames.com/images/crazygames-logo.png" alt="CrazyGames">
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search for games...">
+                <button>🔍</button>
+            </div>
+            
+            <div class="user-actions">
+                <button>Login</button>
+                <button>Sign Up</button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li class="active">Home</li>
+                <li>New Games</li>
+                <li>Best Games</li>
+                <li>Action</li>
+                <li>Adventure</li>
+                <li>Puzzle</li>
+                <li>Sports</li>
+                <li>Multiplayer</li>
+                <li>IO Games</li>
+                <li>Mobile Games</li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Play the Best Free Online Games</h1>
+                <p>Discover thousands of exciting games in our massive collection. No downloads required - play instantly for free!</p>
+                <div class="hero-buttons">
+                    <button class="primary">Play Now</button>
+                    <button class="secondary">Browse Games</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Categories Section -->
+        <section class="categories">
+            <div class="section-header">
+                <h2>Popular Categories</h2>
+                <a href="#">See all</a>
+            </div>
+            
+            <div class="category-list">
+                <div class="category-card">
+                    <div class="category-image" style="background-image: url('https://www.crazygames.com/img/categories/action-games.jpg')"></div>
+                    <div class="category-info">
+                        <h3>Action Games</h3>
+                        <p>1,234 games</p>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-image" style="background-image: url('https://www.crazygames.com/img/categories/adventure-games.jpg')"></div>
+                    <div class="category-info">
+                        <h3>Adventure Games</h3>
+                        <p>876 games</p>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-image" style="background-image: url('https://www.crazygames.com/img/categories/puzzle-games.jpg')"></div>
+                    <div class="category-info">
+                        <h3>Puzzle Games</h3>
+                        <p>654 games</p>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-image" style="background-image: url('https://www.crazygames.com/img/categories/sports-games.jpg')"></div>
+                    <div class="category-info">
+                        <h3>Sports Games</h3>
+                        <p>432 games</p>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-image" style="background-image: url('https://www.crazygames.com/img/categories/multiplayer-games.jpg')"></div>
+                    <div class="category-info">
+                        <h3>Multiplayer Games</h3>
+                        <p>1,087 games</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Popular Games Section -->
+        <section class="popular-games">
+            <div class="section-header">
+                <h2>Popular Games</h2>
+                <a href="#">See all</a>
+            </div>
+            
+            <div class="game-list">
+                <div class="game-card">
+                    <div class="game-image" style="background-image: url('https://www.crazygames.com/games/thumbnails/moto-x3m_200x200.jpg')">
+                        <div class="game-badge">NEW</div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Moto X3M</h3>
+                        <div class="game-stats">
+                            <span>⭐ 4.8</span>
+                            <span>10M+ plays</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image" style="background-image: url('https://www.crazygames.com/games/thumbnails/fireboy-and-watergirl-1-forest-temple_200x200.jpg')">
+                        <div class="game-badge">HOT</div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Fireboy & Watergirl</h3>
+                        <div class="game-stats">
+                            <span>⭐ 4.7</span>
+                            <span>8M+ plays</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image" style="background-image: url('https://www.crazygames.com/games/thumbnails/1v1-lol_200x200.jpg')">
+                        <div class="game-badge">TRENDING</div>
+                    </div>
+                    <div class="game-info">
+                        <h3>1v1.LOL</h3>
+                        <div class="game-stats">
+                            <span>⭐ 4.6</span>
+                            <span>15M+ plays</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image" style="background-image: url('https://www.crazygames.com/games/thumbnails/among-us_200x200.jpg')">
+                        <div class="game-badge">POPULAR</div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Among Us</h3>
+                        <div class="game-stats">
+                            <span>⭐ 4.9</span>
+                            <span>20M+ plays</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image" style="background-image: url('https://www.crazygames.com/games/thumbnails/vex-4_200x200.jpg')">
+                        <div class="game-badge">NEW</div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Vex 4</h3>
+                        <div class="game-stats">
+                            <span>⭐ 4.5</span>
+                            <span>5M+ plays</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- New Games Section -->
+        <section class="popular-games">
+            <div class="section-header">
+                <h2>New Games</h2>
+                <a href="#">See all</a>
+            </div>
+            
+            <div class="game-list">
+                <div class="game-card">
+                    <div class="game-image" style="background-image: url('https://www.crazygames.com/games/thumbnails/paper-io-2_200x200.jpg')">
+                        <div class="game-badge">NEW</div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Paper.io 2</h3>
+                        <div class="game-stats">
+                            <span>⭐ 4.3</span>
+                            <span>3M+ plays</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image" style="background-image: url('https://www.crazygames.com/games/thumbnails/basketball-stars_200x200.jpg')">
+                        <div class="game-badge">NEW</div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Basketball Stars</h3>
+                        <div class="game-stats">
+                            <span>⭐ 4.4</span>
+                            <span>2M+ plays</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image" style="background-image: url('https://www.crazygames.com/games/thumbnails/roblox_200x200.jpg')">
+                        <div class="game-badge">HOT</div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Roblox</h3>
+                        <div class="game-stats">
+                            <span>⭐ 4.7</span>
+                            <span>12M+ plays</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image" style="background-image: url('https://www.crazygames.com/games/thumbnails/slope_200x200.jpg')">
+                        <div class="game-badge">TRENDING</div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Slope</h3>
+                        <div class="game-stats">
+                            <span>⭐ 4.6</span>
+                            <span>7M+ plays</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <div class="game-image" style="background-image: url('https://www.crazygames.com/games/thumbnails/just-fall-lol_200x200.jpg')">
+                        <div class="game-badge">NEW</div>
+                    </div>
+                    <div class="game-info">
+                        <h3>Just Fall LOL</h3>
+                        <div class="game-stats">
+                            <span>⭐ 4.2</span>
+                            <span>1M+ plays</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Developers</h3>
+                <ul>
+                    <li><a href="#">Submit Your Game</a></li>
+                    <li><a href="#">Developer Resources</a></li>
+                    <li><a href="#">Game Monetization</a></li>
+                    <li><a href="#">Game Promotion</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#">📘</a>
+                    <a href="#">🐦</a>
+                    <a href="#">📸</a>
+                    <a href="#">📺</a>
+                    <a href="#">💬</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2023 CrazyGames Clone. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Simple functionality for demonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make game cards clickable
+            const gameCards = document.querySelectorAll('.game-card');
+            gameCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const gameName = this.querySelector('h3').textContent;
+                    alert(`Loading ${gameName}... (This is a demo)`);
+                });
+            });
+            
+            // Make category cards clickable
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const categoryName = this.querySelector('h3').textContent;
+                    alert(`Showing ${categoryName} games... (This is a demo)`);
+                });
+            });
+            
+            // Navigation menu active state
+            const navItems = document.querySelectorAll('.nav-menu li');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.querySelector('.search-bar input');
+            const searchButton = document.querySelector('.search-bar button');
+            
+            searchButton.addEventListener('click', function() {
+                if (searchInput.value.trim() !== '') {
+                    alert(`Searching for "${searchInput.value}"... (This is a demo)`);
+                }
+            });
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && searchInput.value.trim() !== '') {
+                    alert(`Searching for "${searchInput.value}"... (This is a demo)`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
