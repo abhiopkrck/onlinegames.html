@@ -1,0 +1,3 @@
+<?php
+// Show prescriptions.php
+?>

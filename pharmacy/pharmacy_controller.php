@@ -1,0 +1,3 @@
+<?php
+// Pharmacy controller.php
+?>

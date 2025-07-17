@@ -1,0 +1,3 @@
+<?php
+// Assign medicines.php
+?>
