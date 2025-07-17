@@ -1,0 +1,3 @@
+<?php
+// Book appointment.php
+?>

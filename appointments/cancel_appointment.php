@@ -1,0 +1,3 @@
+<?php
+// Cancel appointment.php
+?>

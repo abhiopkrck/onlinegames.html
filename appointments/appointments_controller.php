@@ -1,0 +1,3 @@
+<?php
+// Appointments controller.php
+?>

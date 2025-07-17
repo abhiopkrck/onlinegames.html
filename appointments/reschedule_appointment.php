@@ -1,0 +1,3 @@
+<?php
+// Reschedule appointment.php
+?>
