@@ -1,0 +1,3 @@
+<?php
+// Patients controller.php
+?>
