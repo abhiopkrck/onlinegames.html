@@ -1,0 +1,3 @@
+<?php
+// Monitor stock.php
+?>

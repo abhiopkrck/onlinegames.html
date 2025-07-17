@@ -1,0 +1,3 @@
+<?php
+// Inventory controller.php
+?>

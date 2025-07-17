@@ -1,0 +1,3 @@
+<?php
+// Track batch.php
+?>
