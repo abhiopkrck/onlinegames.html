@@ -1,6 +1,4 @@
-<?php
-// add_appointment.php
-?>
+
 
 <!DOCTYPE html>
 <html>
