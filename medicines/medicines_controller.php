@@ -1,0 +1,3 @@
+<?php
+// Medicines controller.php
+?>
