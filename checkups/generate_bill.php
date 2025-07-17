@@ -1,0 +1,3 @@
+<?php
+// Generate bill.php
+?>

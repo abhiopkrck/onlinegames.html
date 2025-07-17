@@ -1,0 +1,3 @@
+<?php
+// Checkup controller.php
+?>
