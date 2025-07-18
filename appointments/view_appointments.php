@@ -1,99 +1,87 @@
+<?php
+// Step 1: Connect to database
+$conn = new mysqli("localhost", "root", "", "clinic");
+
+// Step 2: Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Step 3: Define SQL query
+$sql = "SELECT 
+            a.appointment_id, 
+            p.name AS patient_name, 
+            a.doctor_name, 
+            a.appointment_date, 
+            a.status 
+        FROM appointments a
+        JOIN patients p ON a.patient_id = p.patient_id";
+
+// Step 4: Execute query and check result
+$result = $conn->query($sql);
+
+if (!$result) {
+    die("SQL Error: " . $conn->error);  // Show error clearly
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reschedule Appointment</title>
+    <title>View Appointments</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
+            font-family: Arial;
+            background-color: #f0f9ff;
         }
-
-        .container {
+        table {
             width: 90%;
-            max-width: 600px;
-            background: white;
-            margin: 50px auto;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: 30px auto;
+            border-collapse: collapse;
         }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #333;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            margin: 10px 0 5px;
-            font-weight: bold;
-        }
-
-        input[type="date"],
-        input[type="hidden"] {
+        th, td {
+            border: 1px solid #aaa;
             padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .back-link {
             text-align: center;
-            margin-top: 20px;
         }
-
-        .back-link a {
+        th {
+            background-color: #0077b6;
+            color: white;
+        }
+        a {
             text-decoration: none;
-            color: #007bff;
+            color: #0077b6;
         }
-
-        .back-link a:hover {
+        a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
+    <h2 style="text-align:center;">Appointment List</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
 
-<div class="container">
-    <h2>Reschedule Appointment</h2>
-    <form method="POST" action="appointments_controller.php">
-        <input type="hidden" name="reschedule_appointment" value="1">
-        <input type="hidden" name="appointment_id" value="<?php echo $_GET['id']; ?>">
-
-        <label for="new_date">New Appointment Date:</label>
-        <input type="date" id="new_date" name="new_date" required>
-
-        <button type="submit">Reschedule</button>
-    </form>
-
-    <div class="back-link">
-        <a href="view_appointments.php">← Back to Appointments</a>
-    </div>
-</div>
-
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+                <td><?= $row['appointment_id']; ?></td>
+                <td><?= $row['patient_name']; ?></td>
+                <td><?= $row['doctor_name']; ?></td>
+                <td><?= $row['appointment_date']; ?></td>
+                <td><?= $row['status']; ?></td>
+                <td>
+                    <a href="edit_appointment.php?id=<?= $row['appointment_id']; ?>">Edit</a> |
+                    <a href="delete_appointment.php?id=<?= $row['appointment_id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
 </body>
 </html>
